@@ -13,35 +13,27 @@ const StyledCard = styled(Box).attrs({
   border: '1px solid lightgray',
   borderRadius: 8,
   boxShadow: '0 3px 6px lightgray, 0 3px 6px',
+  display: 'flex',
+  height: '12.5rem',
+  justifyContent: 'center',
   overflow: 'hidden',
-})``;
-
-const StyledAvatar = styled(Box).attrs({
-  height: '200px',
   position: 'relative',
-  width: '200px',
+  width: '12.5rem',
 })``;
 
-const StyledDetailsWrapper = styled(Box).attrs({
-  borderRadius: 'inherit',
-  bottom: '0',
-  overflow: 'hidden',
-  position: 'absolute',
-  width: '100%',
+const StyledImage = styled(Box).attrs({
+  as: 'img',
+  height: 'auto',
+  width: '75%',
 })``;
 
 const StyledDetails = styled(Box).attrs({
-  alignItems: 'flex-end',
-  display: 'flex',
-  justifyContent: 'space-between',
-  margin: 8,
-  position: 'relative',
-})``;
-
-const StyledHandle = styled(Box).attrs({
-  color: 'white',
-  display: 'flex',
-  flexDirection: 'column',
+  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+  borderRadius: 'inherit',
+  bottom: '0',
+  padding: 8,
+  overflow: 'hidden',
+  position: 'absolute',
   width: '100%',
 })``;
 
@@ -50,6 +42,7 @@ const StyledH6 = styled(Box).attrs({
   alignItems: 'center',
   display: 'flex',
   fontSize: 16,
+  m: 0,
   mb: 4,
 })``;
 
@@ -59,42 +52,22 @@ const StyledDetailsRow = styled(Box).attrs({
   justifyContent: 'space-between',
 })``;
 
-const StyledAge = styled(Box).attrs({
-  alignItems: 'center',
-  display: 'flex',
-  mb: 4,
-})``;
-
-const StyledPhotoCount = styled(Box).attrs({
-  color: 'white',
-  display: 'inline-block',
-  height: '0.9375 rem',
-  mr: 4,
-})``;
-
 const SearchCard = ({ data }) => {
   const { name, image, hp, types } = data;
 
   return (
     <StyledCardWrapper>
       <StyledCard>
-        <StyledAvatar>
-          <img src={image} alt="potential date" style={{ width: '90%', height: 'auto' }}></img>
+        <StyledImage src={image} alt="potential date" />
 
-          <StyledDetailsWrapper>
-            <StyledDetails>
-              <StyledHandle>
-                <StyledH6>{name}</StyledH6>
+        <StyledDetails>
+          <StyledH6>{name}</StyledH6>
 
-                <StyledDetailsRow>
-                  {/* <StyledAge>{location ? `${age} • ${location}` : age}</StyledAge>
-
-                  {photoCount > 1 && <StyledPhotoCount>{photoCount}</StyledPhotoCount>} */}
-                </StyledDetailsRow>
-              </StyledHandle>
-            </StyledDetails>
-          </StyledDetailsWrapper>
-        </StyledAvatar>
+          <StyledDetailsRow>
+            <div>HP: {hp}</div>
+            <div>{types.join(', ')}</div>
+          </StyledDetailsRow>
+        </StyledDetails>
       </StyledCard>
     </StyledCardWrapper>
   );
