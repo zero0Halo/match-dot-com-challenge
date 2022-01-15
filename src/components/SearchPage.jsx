@@ -8,10 +8,18 @@ import Header from './Header';
 import SearchCard from './SearchCard';
 
 const StyledMain = styled(Box).attrs({ as: 'main', m: 24 })``;
+
 const StyledControls = styled(Box).attrs({
   as: 'div',
   display: 'flex',
   justifyContent: 'flex-end',
+})``;
+
+const StyledResults = styled(Box).attrs({
+  as: 'div',
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr 1fr 1fr',
+  gridGap: '1rem',
 })``;
 
 const SearchPage = () => {
@@ -38,13 +46,7 @@ const SearchPage = () => {
           </MinimalButton>
         </StyledControls>
 
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr 1fr',
-            gridGap: '16px',
-          }}
-        >
+        <StyledResults>
           {profiles.map((profile) => (
             <SearchCard
               key={profile.id}
@@ -55,7 +57,7 @@ const SearchPage = () => {
               photoCount={profile.photoCount}
             />
           ))}
-        </div>
+        </StyledResults>
       </StyledMain>
     </>
   );

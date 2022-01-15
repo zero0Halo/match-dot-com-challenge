@@ -6,6 +6,7 @@ import ProfilesContextProvider from './components/ProfilesContextProvider';
 
 const GlobalStyle = createGlobalStyle`
   body {
+    font-size: 16px;
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;

@@ -1,14 +1,17 @@
-import React from 'react';
+import styled from 'styled-components/macro';
+// COMPONENTS
+import Box from './Box';
+
+const StyledHeader = styled(Box).attrs({
+  as: 'header',
+  borderBottom: `1px solid #efefef`,
+  padding: 16,
+})``;
 
 export default function Header() {
   return (
-    <header
-      style={{
-        borderBottom: `1px solid #efefef`,
-        padding: '16px',
-      }}
-    >
+    <StyledHeader>
       <img src="./logo.svg" alt="match" width="110" />
-    </header>
+    </StyledHeader>
   );
 }

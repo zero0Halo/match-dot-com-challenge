@@ -3,6 +3,7 @@ import {
   border,
   color,
   flexbox,
+  grid,
   layout,
   // position,
   space,
@@ -17,6 +18,7 @@ const Box = styled.div(
   border,
   color,
   flexbox,
+  grid,
   layout,
   // position,
   space
