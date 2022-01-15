@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import styled from 'styled-components/macro';
 // COMPONENTS
-import { ProfileContext } from './ProfilesContextProvider';
 import Box from './Box';
-import MinimalButton from './MinimalButton';
 import Header from './Header';
+import MinimalButton from './MinimalButton';
+import { ACTIONS, ProfileContext } from './ProfilesContextProvider';
 import SearchCard from './SearchCard';
 
 const StyledMain = styled(Box).attrs({ as: 'main', m: 24 })``;
@@ -24,8 +24,8 @@ const StyledResults = styled(Box).attrs({
 
 const SearchPage = () => {
   const { dispatch, profiles } = useContext(ProfileContext);
-  const handleSortAscending = () => dispatch({ type: 'ascending' });
-  const handleSortDescending = () => dispatch({ type: 'descending' });
+  const handleSortAscending = () => dispatch({ type: ACTIONS.ASCENDING });
+  const handleSortDescending = () => dispatch({ type: ACTIONS.DESCENDING });
 
   return (
     <>
@@ -49,12 +49,12 @@ const SearchPage = () => {
         <StyledResults>
           {profiles.map((profile) => (
             <SearchCard
-              key={profile.id}
-              photoUrl={profile.photoUrl}
-              handle={profile.handle}
-              location={profile.location}
               age={profile.age}
+              handle={profile.handle}
+              key={profile.id}
+              location={profile.location}
               photoCount={profile.photoCount}
+              photoUrl={profile.photoUrl}
             />
           ))}
         </StyledResults>

@@ -5,16 +5,21 @@ export const ProfileContext = React.createContext({
   profiles: [],
 });
 
+export const ACTIONS = {
+  ASCENDING: 'ascending',
+  DESCENDING: 'descending',
+};
+
 function ProfilesReducer(state, action) {
   let profiles;
 
   switch (action.type) {
-    case 'ascending':
+    case ACTIONS.ASCENDING:
       profiles = [...state.profiles];
       profiles.sort((profileA, profileB) => (profileA.handle > profileB.handle ? 1 : -1));
       return { profiles };
 
-    case 'descending':
+    case ACTIONS.DESCENDING:
       profiles = [...state.profiles];
       profiles.sort((profileA, profileB) => (profileA.handle < profileB.handle ? 1 : -1));
       return { profiles };
