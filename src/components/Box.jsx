@@ -5,10 +5,10 @@ import {
   flexbox,
   grid,
   layout,
-  // position,
+  position,
   shadow,
   space,
-  // typography,
+  typography,
 } from 'styled-system';
 
 const Box = styled.div(
@@ -21,10 +21,10 @@ const Box = styled.div(
   flexbox,
   grid,
   layout,
-  // position,
+  position,
   shadow,
-  space
-  // typography
+  space,
+  typography
 );
 
 export default Box;

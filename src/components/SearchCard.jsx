@@ -1,15 +1,6 @@
-import React from 'react';
 import styled from 'styled-components/macro';
 // COMPONENTS
 import Box from './Box';
-
-const styles = {
-  avatar: {
-    position: 'relative',
-    width: '200px',
-    height: '200px',
-  },
-};
 
 const StyledCardWrapper = styled(Box).attrs({
   as: 'article',
@@ -25,73 +16,83 @@ const StyledCard = styled(Box).attrs({
   overflow: 'hidden',
 })``;
 
+const StyledAvatar = styled(Box).attrs({
+  height: '200px',
+  position: 'relative',
+  width: '200px',
+})``;
+
+const StyledDetailsWrapper = styled(Box).attrs({
+  borderRadius: 'inherit',
+  bottom: '0',
+  overflow: 'hidden',
+  position: 'absolute',
+  width: '100%',
+})``;
+
+const StyledDetails = styled(Box).attrs({
+  alignItems: 'flex-end',
+  display: 'flex',
+  justifyContent: 'space-between',
+  margin: 8,
+  position: 'relative',
+})``;
+
+const StyledHandle = styled(Box).attrs({
+  color: 'white',
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+})``;
+
+const StyledH6 = styled(Box).attrs({
+  as: 'h6',
+  alignItems: 'center',
+  display: 'flex',
+  fontSize: 16,
+  mb: 4,
+})``;
+
+const StyledDetailsRow = styled(Box).attrs({
+  alignItems: 'baseline',
+  display: 'flex',
+  justifyContent: 'space-between',
+})``;
+
+const StyledAge = styled(Box).attrs({
+  alignItems: 'center',
+  display: 'flex',
+  mb: 4,
+})``;
+
+const StyledPhotoCount = styled(Box).attrs({
+  color: 'white',
+  display: 'inline-block',
+  height: '0.9375 rem',
+  mr: 4,
+})``;
+
 const SearchCard = ({ photoUrl = '', handle = '', location = '', age = 99, photoCount = 0 }) => {
   return (
     <StyledCardWrapper>
       <StyledCard>
-        <div style={styles.avatar}>
+        <StyledAvatar>
           <img src={photoUrl} alt="potential date"></img>
-          <div
-            style={{
-              position: 'absolute',
-              width: '100%',
-              bottom: '0',
-              borderRadius: 'inherit',
-              overflow: 'hidden',
-            }}
-          >
-            <div
-              style={{
-                margin: 8,
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-end',
-                position: 'relative',
-              }}
-            >
-              <div
-                style={{
-                  color: 'white',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  width: '100%',
-                }}
-              >
-                <h6 style={{ fontSize: '16px ' }}>
-                  <div style={{ display: 'flex', marginBottom: '4px', alignItems: 'center' }}>
-                    {handle}
-                  </div>
-                </h6>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'baseline',
-                  }}
-                >
-                  <div
-                    style={{
-                      display: 'flex',
-                      marginBottom: '4px',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <span>{location ? `${age} • ${location}` : age}</span>
-                  </div>
-                  <div style={{ display: 'inline-block', height: '15px' }}>
-                    {photoCount > 1 && (
-                      <div>
-                        <div style={{ marginRight: '4px' }}>
-                          <span color="white">{photoCount}</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+          <StyledDetailsWrapper>
+            <StyledDetails>
+              <StyledHandle>
+                <StyledH6>{handle}</StyledH6>
+
+                <StyledDetailsRow>
+                  <StyledAge>{location ? `${age} • ${location}` : age}</StyledAge>
+
+                  {photoCount > 1 && <StyledPhotoCount>{photoCount}</StyledPhotoCount>}
+                </StyledDetailsRow>
+              </StyledHandle>
+            </StyledDetails>
+          </StyledDetailsWrapper>
+        </StyledAvatar>
       </StyledCard>
     </StyledCardWrapper>
   );
