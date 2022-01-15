@@ -72,22 +72,24 @@ const StyledPhotoCount = styled(Box).attrs({
   mr: 4,
 })``;
 
-const SearchCard = ({ photoUrl = '', handle = '', location = '', age = 99, photoCount = 0 }) => {
+const SearchCard = ({ data }) => {
+  const { name, image, hp, types } = data;
+
   return (
     <StyledCardWrapper>
       <StyledCard>
         <StyledAvatar>
-          <img src={photoUrl} alt="potential date"></img>
+          <img src={image} alt="potential date" style={{ width: '90%', height: 'auto' }}></img>
 
           <StyledDetailsWrapper>
             <StyledDetails>
               <StyledHandle>
-                <StyledH6>{handle}</StyledH6>
+                <StyledH6>{name}</StyledH6>
 
                 <StyledDetailsRow>
-                  <StyledAge>{location ? `${age} • ${location}` : age}</StyledAge>
+                  {/* <StyledAge>{location ? `${age} • ${location}` : age}</StyledAge>
 
-                  {photoCount > 1 && <StyledPhotoCount>{photoCount}</StyledPhotoCount>}
+                  {photoCount > 1 && <StyledPhotoCount>{photoCount}</StyledPhotoCount>} */}
                 </StyledDetailsRow>
               </StyledHandle>
             </StyledDetails>

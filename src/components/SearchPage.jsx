@@ -23,13 +23,15 @@ const StyledResults = styled(Box).attrs({
 })``;
 
 const SearchPage = () => {
-  const { dispatch, profiles } = useContext(ProfileContext);
+  const { asyncDispatch, dispatch, pokemon } = useContext(ProfileContext);
   const handleSortAscending = () => dispatch({ type: ACTIONS.ASCENDING });
   const handleSortDescending = () => dispatch({ type: ACTIONS.DESCENDING });
 
   return (
     <>
       <Header />
+
+      <button onClick={asyncDispatch}>Get Pokemon</button>
 
       <StyledMain>
         <StyledControls>
@@ -47,15 +49,16 @@ const SearchPage = () => {
         </StyledControls>
 
         <StyledResults>
-          {profiles.map((profile) => (
-            <SearchCard
-              age={profile.age}
-              handle={profile.handle}
-              key={profile.id}
-              location={profile.location}
-              photoCount={profile.photoCount}
-              photoUrl={profile.photoUrl}
-            />
+          {pokemon.map((pokemonData) => (
+            <SearchCard data={pokemonData} />
+            // <SearchCard
+            //   age={profile.age}
+            //   handle={profile.handle}
+            //   key={profile.id}
+            //   location={profile.location}
+            //   photoCount={profile.photoCount}
+            //   photoUrl={profile.photoUrl}
+            // />
           ))}
         </StyledResults>
       </StyledMain>
