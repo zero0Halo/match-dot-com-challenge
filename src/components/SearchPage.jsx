@@ -1,64 +1,64 @@
-import React from 'react';
+import { useContext } from 'react';
+import styled from 'styled-components/macro';
+// COMPONENTS
 import { ProfileContext } from './ProfilesContextProvider';
+import Box from './Box';
 import MinimalButton from './MinimalButton';
 import Header from './Header';
 import SearchCard from './SearchCard';
 
-class SearchPage extends React.Component {
-  static contextType = ProfileContext;
+const StyledMain = styled(Box).attrs({ as: 'main', m: 24 })``;
+const StyledControls = styled(Box).attrs({
+  as: 'div',
+  display: 'flex',
+  justifyContent: 'flex-end',
+})``;
 
-  handleSortAscending = () => {
-    this.context.dispatch({ type: 'ascending' });
-  };
+const SearchPage = () => {
+  const { dispatch, profiles } = useContext(ProfileContext);
+  const handleSortAscending = () => dispatch({ type: 'ascending' });
+  const handleSortDescending = () => dispatch({ type: 'descending' });
 
-  handleSortDescending = () => {
-    this.context.dispatch({ type: 'descending' });
-  };
+  return (
+    <>
+      <Header />
 
-  render() {
-    const { profiles = [] } = this.context;
+      <StyledMain>
+        <StyledControls>
+          <MinimalButton disabled>
+            <img src="filter.svg" width={22} alt="filter" />
+          </MinimalButton>
 
-    return (
-      <React.Fragment>
-        <Header />
+          <MinimalButton onClick={handleSortAscending}>
+            <img src="./ascending.svg" width={22} alt="Sort ascending" />
+          </MinimalButton>
 
-        <main style={{ margin: 24 }}>
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <MinimalButton disabled>
-              <img src="filter.svg" width={22} alt="filter" />
-            </MinimalButton>
+          <MinimalButton onClick={handleSortDescending}>
+            <img src="./descending.svg" width={22} alt="Sort descending" />
+          </MinimalButton>
+        </StyledControls>
 
-            <MinimalButton onClick={this.handleSortAscending}>
-              <img src="./ascending.svg" width={22} alt="Sort ascending" />
-            </MinimalButton>
-
-            <MinimalButton onClick={this.handleSortDescending}>
-              <img src="./descending.svg" width={22} alt="Sort descending" />
-            </MinimalButton>
-          </div>
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr 1fr 1fr',
-              gridGap: '16px',
-            }}
-          >
-            {profiles.map((profile) => (
-              <SearchCard
-                key={profile.id}
-                photoUrl={profile.photoUrl}
-                handle={profile.handle}
-                location={profile.location}
-                age={profile.age}
-                photoCount={profile.photoCount}
-              />
-            ))}
-          </div>
-        </main>
-      </React.Fragment>
-    );
-  }
-}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr 1fr 1fr',
+            gridGap: '16px',
+          }}
+        >
+          {profiles.map((profile) => (
+            <SearchCard
+              key={profile.id}
+              photoUrl={profile.photoUrl}
+              handle={profile.handle}
+              location={profile.location}
+              age={profile.age}
+              photoCount={profile.photoCount}
+            />
+          ))}
+        </div>
+      </StyledMain>
+    </>
+  );
+};
 
 export default SearchPage;

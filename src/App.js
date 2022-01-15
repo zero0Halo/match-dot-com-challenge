@@ -1,12 +1,27 @@
-import React from 'react';
+import { createGlobalStyle, ThemeProvider } from 'styled-components/macro';
+// COMPONENTS
+import theme from './theme';
 import SearchPage from './components/SearchPage';
 import ProfilesContextProvider from './components/ProfilesContextProvider';
-import './styles.css';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: ${({ theme }) => theme.fonts.base};
+  }
+`;
 
 function App() {
   return (
     <ProfilesContextProvider>
-      <SearchPage />
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+
+        <SearchPage />
+      </ThemeProvider>
     </ProfilesContextProvider>
   );
 }
