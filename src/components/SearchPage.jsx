@@ -16,7 +16,7 @@ const StyledControls = styled(Box).attrs({
 })``;
 
 const StyledResults = styled(Box).attrs({
-  as: 'div',
+  as: 'section',
   display: 'grid',
   gridTemplateColumns: '1fr 1fr 1fr 1fr',
   gridGap: '1rem',
