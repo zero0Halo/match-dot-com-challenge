@@ -1,4 +1,6 @@
 import { createContext, useCallback, useEffect, useReducer } from 'react';
+import { useTimer } from 'react-timer-hook';
+import dayjs from 'dayjs';
 
 export const ProfileContext = createContext();
 
@@ -57,6 +59,17 @@ function profilesReducer(state, { payload, type }) {
 
 function ProfilesContextProvider({ children }) {
   const [state, dispatch] = useReducer(profilesReducer, initialState);
+  const {
+    isRunning: timerIsRunning,
+    seconds: count,
+    restart,
+    pause: timerPause,
+  } = useTimer({
+    autoStart: false,
+    expiryTimestamp: dayjs().add(10, 'seconds').toDate(),
+    onExpire: () => asyncDispatch(),
+  });
+  const timerRestart = useCallback(() => restart(dayjs().add(10, 'seconds').toDate()), [restart]);
 
   const asyncDispatch = useCallback(async () => {
     dispatch({ type: ACTIONS.PROFILES_LOADING });
@@ -81,32 +94,25 @@ function ProfilesContextProvider({ children }) {
         );
 
         dispatch({ type: ACTIONS.PROFILES_LOADED, payload: { profiles, next: payload.next } });
+
+        timerRestart();
       }
     } catch (err) {
       dispatch({ type: ACTIONS.LOADING_ERROR });
       console.error(err);
     }
-  }, [state.nextPage]);
+  }, [state.nextPage, timerRestart]);
 
   useEffect(() => {
-    // This serves as the initial loading of profile data. The initial state has all of these
-    // values as false and once profiles are attempted to be loaded the first time they never
-    // will again.
     if (!state.loaded && !state.loading && !state.error) {
       asyncDispatch();
     }
   }, [asyncDispatch, state.error, state.loaded, state.loading]);
 
-  useEffect(() => {
-    const refreshTimer = setInterval(() => {
-      asyncDispatch();
-    }, 10 * 1000);
-
-    return () => clearInterval(refreshTimer);
-  }, [asyncDispatch]);
-
   return (
-    <ProfileContext.Provider value={{ ...state, asyncDispatch, dispatch }}>
+    <ProfileContext.Provider
+      value={{ ...state, asyncDispatch, count, dispatch, timerIsRunning, timerRestart, timerPause }}
+    >
       {children}
     </ProfileContext.Provider>
   );
