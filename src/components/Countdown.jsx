@@ -1,25 +1,7 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
 import { ProfileContext } from './ProfilesContextProvider';
-import Box from './Box';
-
-const StyledButton = styled(Box).attrs({
-  as: 'button',
-  type: 'button',
-})(
-  css({
-    bg: '#1730e5',
-    border: 'solid gray 1px',
-    borderRadius: 'rounded',
-    color: '#FCF5E5',
-    fontSize: 16,
-    fontWeight: 'bold',
-    height: '2rem',
-    lineHeight: 1.5,
-    px: 16,
-  })
-);
 
 const colorScale = [
   '#ff3300',
@@ -34,7 +16,40 @@ const colorScale = [
   '#1730e5',
 ];
 
-const StyledCount = styled(Box)(({ count }) =>
+const StyledCountdown = styled('div')(
+  css({
+    display: 'flex',
+    mr: 'auto',
+  })
+);
+
+const StyledButton = styled('button').attrs({
+  type: 'button',
+})(
+  css({
+    alignItems: 'center',
+    bg: '#1730e5',
+    border: 'solid gray 1px',
+    borderRadius: 'rounded',
+    color: '#FCF5E5',
+    cursor: 'pointer',
+    display: 'flex',
+    fontSize: 16,
+    fontWeight: 'bold',
+    height: '3rem',
+    lineHeight: 1.5,
+    pl: 16,
+    pr: 6,
+  })
+);
+
+const StyledButtonText = styled('span')(
+  css({
+    width: '10rem',
+  })
+);
+
+const StyledCount = styled('div')(({ count }) =>
   css({
     alignItems: 'center',
     bg: colorScale[count - 1],
@@ -53,18 +68,24 @@ const StyledCount = styled(Box)(({ count }) =>
 );
 
 function Countdown() {
-  const { count, timerIsRunning, timerRestart, timerPause } = useContext(ProfileContext);
+  const { count, timerRestart, timerPause } = useContext(ProfileContext);
+  const [showStopLoading, setShowStopLoading] = useState(true);
+  const clickHandler = () => {
+    if (showStopLoading) {
+      timerPause();
+    } else {
+      timerRestart();
+    }
+    setShowStopLoading((state) => !state);
+  };
 
   return (
-    <div style={{ display: 'flex', marginRight: 'auto' }}>
-      {timerIsRunning ? (
-        <StyledButton onClick={timerPause}>Stop Auto-Loading</StyledButton>
-      ) : (
-        <StyledButton onClick={timerRestart}>Start Auto-Loading</StyledButton>
-      )}
-
-      <StyledCount count={count}>{count}</StyledCount>
-    </div>
+    <StyledCountdown>
+      <StyledButton onClick={clickHandler}>
+        <StyledButtonText>{showStopLoading ? 'Stop' : 'Start'} Auto-Loading</StyledButtonText>
+        <StyledCount count={count}>{count}</StyledCount>
+      </StyledButton>
+    </StyledCountdown>
   );
 }
 

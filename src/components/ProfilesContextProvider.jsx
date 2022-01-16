@@ -22,7 +22,7 @@ const initialState = {
   profiles: [],
 };
 
-function profilesReducer(state, { payload, type }) {
+function reducer(state, { payload, type }) {
   let profiles;
 
   switch (type) {
@@ -58,7 +58,7 @@ function profilesReducer(state, { payload, type }) {
 }
 
 function ProfilesContextProvider({ children }) {
-  const [state, dispatch] = useReducer(profilesReducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
   const {
     isRunning: timerIsRunning,
     seconds: count,

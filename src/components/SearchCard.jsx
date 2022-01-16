@@ -1,12 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
-// COMPONENTS
-import Box from './Box';
 
-const StyledCardWrapper = styled(Box).attrs({
-  as: 'article',
-})(
+const StyledCardWrapper = styled('article')(
   css({
     alignItems: 'center',
     display: 'flex',
@@ -14,7 +10,7 @@ const StyledCardWrapper = styled(Box).attrs({
   })
 );
 
-const StyledCard = styled(Box)(
+const StyledCard = styled('div')(
   css({
     border: '1px solid lightgray',
     borderRadius: 8,
@@ -28,9 +24,7 @@ const StyledCard = styled(Box)(
   })
 );
 
-const StyledImage = styled(Box).attrs({
-  as: 'img',
-})`
+const StyledImage = styled('img')`
   height: auto;
   opacity: 0;
   width: 75%;
@@ -41,11 +35,11 @@ const StyledImage = styled(Box).attrs({
   }
 `;
 
-const StyledDetails = styled(Box)(
+const StyledDetails = styled('div')(
   css({
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    borderRadius: 'inherit',
     bottom: '0',
+    boxSizing: 'border-box',
     overflow: 'hidden',
     padding: 8,
     position: 'absolute',
@@ -53,9 +47,7 @@ const StyledDetails = styled(Box)(
   })
 );
 
-const StyledH6 = styled(Box).attrs({
-  as: 'h6',
-})(
+const StyledH6 = styled('h2')(
   css({
     alignItems: 'center',
     display: 'flex',
@@ -65,10 +57,11 @@ const StyledH6 = styled(Box).attrs({
   })
 );
 
-const StyledDetailsRow = styled(Box)(
+const StyledDetailsRow = styled('div')(
   css({
     alignItems: 'baseline',
     display: 'flex',
+    fontSize: 12,
     justifyContent: 'space-between',
   })
 );

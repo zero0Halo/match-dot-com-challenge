@@ -2,14 +2,13 @@ import { useContext } from 'react';
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
 // COMPONENTS
-import Box from './Box';
+import Countdown from './Countdown';
 import Header from './Header';
 import MinimalButton from './MinimalButton';
 import { ACTIONS, ProfileContext } from './ProfilesContextProvider';
 import SearchCard from './SearchCard';
-import Countdown from './Countdown';
 
-const StyledError = styled(Box)(
+const StyledError = styled('div')(
   css({
     backgroundColor: 'red',
     borderRadius: 8,
@@ -24,24 +23,21 @@ const StyledError = styled(Box)(
   })
 );
 
-const StyledMain = styled(Box).attrs({ as: 'main' })(
+const StyledMain = styled('main')(
   css({
     m: 24,
   })
 );
 
-const StyledControls = styled(Box).attrs({
-  as: 'div',
-})(
+const StyledControls = styled('div')(
   css({
     display: 'flex',
     justifyContent: 'flex-end',
+    mb: 16,
   })
 );
 
-const StyledResults = styled(Box).attrs({
-  as: 'section',
-})(
+const StyledResults = styled('section')(
   css({
     display: 'grid',
     gridTemplateColumns: '1fr 1fr 1fr 1fr',
