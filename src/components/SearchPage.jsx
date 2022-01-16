@@ -7,6 +7,19 @@ import MinimalButton from './MinimalButton';
 import { ACTIONS, ProfileContext } from './ProfilesContextProvider';
 import SearchCard from './SearchCard';
 
+const StyledError = styled(Box).attrs({
+  backgroundColor: 'red',
+  borderRadius: 8,
+  color: 'white',
+  display: 'block',
+  fontSize: 32,
+  mx: 'auto',
+  px: 16,
+  py: 8,
+  textAlign: 'center',
+  width: 'fit-content',
+})``;
+
 const StyledMain = styled(Box).attrs({ as: 'main', m: 24 })``;
 
 const StyledControls = styled(Box).attrs({
@@ -23,7 +36,7 @@ const StyledResults = styled(Box).attrs({
 })``;
 
 const SearchPage = () => {
-  const { asyncDispatch, dispatch, pokemon } = useContext(ProfileContext);
+  const { dispatch, error, profiles } = useContext(ProfileContext);
   const handleSortAscending = () => dispatch({ type: ACTIONS.ASCENDING });
   const handleSortDescending = () => dispatch({ type: ACTIONS.DESCENDING });
 
@@ -31,7 +44,7 @@ const SearchPage = () => {
     <>
       <Header />
 
-      <button onClick={asyncDispatch}>Get Pokemon</button>
+      {error && <StyledError>OMG! There was a problem retrieving new profiles!</StyledError>}
 
       <StyledMain>
         <StyledControls>
@@ -49,16 +62,8 @@ const SearchPage = () => {
         </StyledControls>
 
         <StyledResults>
-          {pokemon.map((pokemonData) => (
-            <SearchCard data={pokemonData} />
-            // <SearchCard
-            //   age={profile.age}
-            //   handle={profile.handle}
-            //   key={profile.id}
-            //   location={profile.location}
-            //   photoCount={profile.photoCount}
-            //   photoUrl={profile.photoUrl}
-            // />
+          {profiles.map((profile) => (
+            <SearchCard data={profile} key={profile.name} />
           ))}
         </StyledResults>
       </StyledMain>

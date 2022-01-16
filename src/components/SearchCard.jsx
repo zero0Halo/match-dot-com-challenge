@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components/macro';
 // COMPONENTS
 import Box from './Box';
@@ -25,7 +26,14 @@ const StyledImage = styled(Box).attrs({
   as: 'img',
   height: 'auto',
   width: '75%',
-})``;
+})`
+  opacity: 0;
+
+  &.fadeIn {
+    opacity: 1;
+    transition: opacity 250ms;
+  }
+`;
 
 const StyledDetails = styled(Box).attrs({
   backgroundColor: 'rgba(255, 255, 255, 0.9)',
@@ -54,11 +62,17 @@ const StyledDetailsRow = styled(Box).attrs({
 
 const SearchCard = ({ data }) => {
   const { name, image, hp, types } = data;
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <StyledCardWrapper>
       <StyledCard>
-        <StyledImage src={image} alt="potential date" />
+        <StyledImage
+          alt="potential date"
+          className={loaded ? 'fadeIn' : undefined}
+          onLoad={() => setLoaded(true)}
+          src={image}
+        />
 
         <StyledDetails>
           <StyledH6>{name}</StyledH6>
