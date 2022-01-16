@@ -11,6 +11,11 @@ const theme = {
     22: '1.375rem',
     26: '1.625rem',
   },
+  radii: {
+    base: '8px',
+    round: '50%',
+    rounded: '1000px',
+  },
   space: {
     0: 0,
     1: '0.0625rem',

@@ -6,6 +6,7 @@ import Header from './Header';
 import MinimalButton from './MinimalButton';
 import { ACTIONS, ProfileContext } from './ProfilesContextProvider';
 import SearchCard from './SearchCard';
+import Countdown from './Countdown';
 
 const StyledError = styled(Box).attrs({
   backgroundColor: 'red',
@@ -36,8 +37,7 @@ const StyledResults = styled(Box).attrs({
 })``;
 
 const SearchPage = () => {
-  const { count, dispatch, error, profiles, timerIsRunning, timerRestart, timerPause } =
-    useContext(ProfileContext);
+  const { dispatch, error, profiles } = useContext(ProfileContext);
   const handleSortAscending = () => dispatch({ type: ACTIONS.ASCENDING });
   const handleSortDescending = () => dispatch({ type: ACTIONS.DESCENDING });
 
@@ -47,13 +47,7 @@ const SearchPage = () => {
 
       {error && <StyledError>OMG! There was a problem retrieving new profiles!</StyledError>}
 
-      {count}
-
-      {timerIsRunning ? (
-        <button onClick={timerPause}>Stop</button>
-      ) : (
-        <button onClick={timerRestart}>Start</button>
-      )}
+      <Countdown />
 
       <StyledMain>
         <StyledControls>
