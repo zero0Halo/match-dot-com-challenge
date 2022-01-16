@@ -56,7 +56,7 @@ function Countdown() {
   const { count, timerIsRunning, timerRestart, timerPause } = useContext(ProfileContext);
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', marginRight: 'auto' }}>
       {timerIsRunning ? (
         <StyledButton onClick={timerPause}>Stop Auto-Loading</StyledButton>
       ) : (

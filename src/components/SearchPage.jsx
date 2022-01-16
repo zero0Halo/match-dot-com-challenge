@@ -47,10 +47,10 @@ const SearchPage = () => {
 
       {error && <StyledError>OMG! There was a problem retrieving new profiles!</StyledError>}
 
-      <Countdown />
-
       <StyledMain>
         <StyledControls>
+          <Countdown />
+
           <MinimalButton disabled>
             <img src="filter.svg" width={22} alt="filter" />
           </MinimalButton>
