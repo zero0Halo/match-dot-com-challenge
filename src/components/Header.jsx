@@ -8,7 +8,7 @@ const StyledHeader = styled(Box).attrs({
 })(
   css({
     borderBottom: `1px solid #efefef`,
-    padding: 16,
+    padding: [8, 16],
   })
 );
 

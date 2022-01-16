@@ -34,18 +34,18 @@ const StyledButton = styled('button').attrs({
     color: '#FCF5E5',
     cursor: 'pointer',
     display: 'flex',
-    fontSize: 16,
+    fontSize: [12, 16],
     fontWeight: 'bold',
-    height: '3rem',
+    height: ['2rem', '3rem'],
     lineHeight: 1.5,
-    pl: 16,
-    pr: 6,
+    pl: [10, 16],
+    pr: [4, 6],
   })
 );
 
 const StyledButtonText = styled('span')(
   css({
-    width: '10rem',
+    width: ['8rem', '10rem'],
   })
 );
 
@@ -56,14 +56,14 @@ const StyledCount = styled('div')(({ count }) =>
     borderRadius: 'round',
     color: '#FCF5E5',
     display: 'flex',
-    fontSize: 16,
+    fontSize: [12, 16],
     fontWeight: 'bold',
-    height: '2rem',
+    height: ['1.5rem', '2rem'],
     justifyContent: 'center',
     lineHeight: 1.5,
-    ml: 8,
+    ml: [4, 8],
     transition: 'background 250ms',
-    width: '2rem',
+    width: ['1.5rem', '2rem'],
   })
 );
 

@@ -25,12 +25,14 @@ const StyledError = styled('div')(
 
 const StyledMain = styled('main')(
   css({
-    m: 24,
+    mx: 'auto',
+    maxWidth: ['500px', '750px', '1000px'],
   })
 );
 
 const StyledControls = styled('div')(
   css({
+    alignItems: 'center',
     display: 'flex',
     justifyContent: 'flex-end',
     mb: 16,
@@ -40,7 +42,7 @@ const StyledControls = styled('div')(
 const StyledResults = styled('section')(
   css({
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr 1fr 1fr',
+    gridTemplateColumns: ['1fr', '1fr 1fr', '1fr 1fr 1fr', '1fr 1fr 1fr 1fr'],
     gridGap: '1rem',
   })
 );
