@@ -1,12 +1,16 @@
 import styled from 'styled-components/macro';
+import css from '@styled-system/css';
 // COMPONENTS
 import Box from './Box';
 
 const StyledHeader = styled(Box).attrs({
   as: 'header',
-  borderBottom: `1px solid #efefef`,
-  padding: 16,
-})``;
+})(
+  css({
+    borderBottom: `1px solid #efefef`,
+    padding: 16,
+  })
+);
 
 export default function Header() {
   return (

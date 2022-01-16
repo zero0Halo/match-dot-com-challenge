@@ -9,7 +9,7 @@ const StyledButton = styled(Box).attrs({
   type: 'button',
 })(
   css({
-    bg: '#141651',
+    bg: '#1730e5',
     border: 'solid gray 1px',
     borderRadius: 'rounded',
     color: '#FCF5E5',
@@ -22,16 +22,16 @@ const StyledButton = styled(Box).attrs({
 );
 
 const colorScale = [
-  'black',
-  'red',
-  'yellow',
-  'orange',
-  'pink',
-  'brown',
-  'navy',
-  'gray',
-  'lightblue',
-  'red',
+  '#ff3300',
+  '#f32f2c',
+  '#e72b46',
+  '#d9285d',
+  '#ca2673',
+  '#b9268a',
+  '#a527a0',
+  '#8c29b7',
+  '#682cce',
+  '#1730e5',
 ];
 
 const StyledCount = styled(Box)(({ count }) =>
@@ -45,10 +45,10 @@ const StyledCount = styled(Box)(({ count }) =>
     fontWeight: 'bold',
     height: '2rem',
     justifyContent: 'center',
+    lineHeight: 1.5,
     ml: 8,
     transition: 'background 250ms',
     width: '2rem',
-    lineHeight: 1.5,
   })
 );
 

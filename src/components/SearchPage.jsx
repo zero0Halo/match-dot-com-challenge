@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import styled from 'styled-components/macro';
+import css from '@styled-system/css';
 // COMPONENTS
 import Box from './Box';
 import Header from './Header';
@@ -8,33 +9,45 @@ import { ACTIONS, ProfileContext } from './ProfilesContextProvider';
 import SearchCard from './SearchCard';
 import Countdown from './Countdown';
 
-const StyledError = styled(Box).attrs({
-  backgroundColor: 'red',
-  borderRadius: 8,
-  color: 'white',
-  display: 'block',
-  fontSize: 32,
-  mx: 'auto',
-  px: 16,
-  py: 8,
-  textAlign: 'center',
-  width: 'fit-content',
-})``;
+const StyledError = styled(Box)(
+  css({
+    backgroundColor: 'red',
+    borderRadius: 8,
+    color: 'white',
+    display: 'block',
+    fontSize: 32,
+    mx: 'auto',
+    px: 16,
+    py: 8,
+    textAlign: 'center',
+    width: 'fit-content',
+  })
+);
 
-const StyledMain = styled(Box).attrs({ as: 'main', m: 24 })``;
+const StyledMain = styled(Box).attrs({ as: 'main' })(
+  css({
+    m: 24,
+  })
+);
 
 const StyledControls = styled(Box).attrs({
   as: 'div',
-  display: 'flex',
-  justifyContent: 'flex-end',
-})``;
+})(
+  css({
+    display: 'flex',
+    justifyContent: 'flex-end',
+  })
+);
 
 const StyledResults = styled(Box).attrs({
   as: 'section',
-  display: 'grid',
-  gridTemplateColumns: '1fr 1fr 1fr 1fr',
-  gridGap: '1rem',
-})``;
+})(
+  css({
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr 1fr 1fr',
+    gridGap: '1rem',
+  })
+);
 
 const SearchPage = () => {
   const { dispatch, error, profiles } = useContext(ProfileContext);

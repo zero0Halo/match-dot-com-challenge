@@ -1,21 +1,18 @@
-import styled, { css } from 'styled-components/macro';
+import styled from 'styled-components/macro';
+import css from '@styled-system/css';
 import Box from './Box';
 
 const StyledMinimalButton = styled(Box).attrs({
   as: 'button',
-  backgroundColor: 'transparent',
-  border: 0,
-  margin: 8,
-})`
-  cursor: pointer;
-
-  ${({ disabled }) =>
-    disabled &&
-    css`
-      cursor: default;
-      opacity: 0.25;
-    `}
-`;
+})(({ disabled }) =>
+  css({
+    backgroundColor: 'transparent',
+    border: 0,
+    cursor: disabled ? 'default' : 'pointer',
+    margin: 8,
+    opacity: disabled ? 0.25 : 1,
+  })
+);
 
 function MinimalButton({ children, disabled = false, onClick, ...props }) {
   return (
