@@ -13,7 +13,7 @@ const StyledCardWrapper = styled('article')(
 const StyledCard = styled('div')(
   css({
     border: '1px solid lightgray',
-    borderRadius: 8,
+    borderRadius: 'base',
     boxShadow: '0 3px 6px lightgray, 0 3px 6px',
     display: 'flex',
     height: '12.5rem',

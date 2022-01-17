@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 import css from '@styled-system/css';
 import { ProfileContext } from './ProfilesContextProvider';
 
+// https://gka.github.io/palettes/#/10|s|ff3300,1730e5|ffffe0,ff005e,93003a|1|1
 const colorScale = [
   '#ff3300',
   '#f32f2c',

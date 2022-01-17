@@ -11,7 +11,7 @@ import SearchCard from './SearchCard';
 const StyledError = styled('div')(
   css({
     backgroundColor: 'red',
-    borderRadius: 8,
+    borderRadius: 'base',
     color: 'white',
     display: 'block',
     fontSize: 32,
@@ -25,6 +25,7 @@ const StyledError = styled('div')(
 
 const StyledMain = styled('main')(
   css({
+    mb: 32,
     mx: 'auto',
     maxWidth: ['500px', '750px', '1000px'],
   })
@@ -35,7 +36,7 @@ const StyledControls = styled('div')(
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'flex-end',
-    mb: 16,
+    my: 16,
   })
 );
 
