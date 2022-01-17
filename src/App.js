@@ -1,7 +1,9 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { createGlobalStyle, ThemeProvider } from 'styled-components/macro';
 // COMPONENTS
 import theme from './theme';
 import SearchPage from './components/SearchPage';
+import Profile from './components/Profile';
 import ProfilesContextProvider from './components/ProfilesContextProvider';
 
 const GlobalStyle = createGlobalStyle`
@@ -21,7 +23,13 @@ function App() {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
 
-        <SearchPage />
+        <Router>
+          <Routes>
+            <Route path="/" element={<SearchPage />}>
+              <Route path="/profile/:id" element={<Profile />} />
+            </Route>
+          </Routes>
+        </Router>
       </ThemeProvider>
     </ProfilesContextProvider>
   );

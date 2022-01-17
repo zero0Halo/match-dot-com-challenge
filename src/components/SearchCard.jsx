@@ -1,6 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
+import { ProfileContext } from './ProfilesContextProvider';
+
+const StyledLink = styled(Link)(
+  css({
+    color: 'black',
+  })
+);
 
 const StyledCardWrapper = styled('article')(
   css({
@@ -67,29 +75,32 @@ const StyledDetailsRow = styled('div')(
 );
 
 const SearchCard = ({ data }) => {
-  const { name, image, hp, types } = data;
-  const [loaded, setLoaded] = useState(false);
+  const { name, id, image, hp, types } = data;
+  const { timerPause } = useContext(ProfileContext);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    <StyledCardWrapper>
-      <StyledCard>
-        <StyledImage
-          alt="potential date"
-          className={loaded ? 'fadeIn' : undefined}
-          onLoad={() => setLoaded(true)}
-          src={image}
-        />
+    <StyledLink to={`/profile/${id}`} onClick={timerPause}>
+      <StyledCardWrapper>
+        <StyledCard>
+          <StyledImage
+            alt="potential date"
+            className={imageLoaded ? 'fadeIn' : undefined}
+            onLoad={() => setImageLoaded(true)}
+            src={image}
+          />
 
-        <StyledDetails>
-          <StyledH6>{name}</StyledH6>
+          <StyledDetails>
+            <StyledH6>{name}</StyledH6>
 
-          <StyledDetailsRow>
-            <div>HP: {hp}</div>
-            <div>{types.join(', ')}</div>
-          </StyledDetailsRow>
-        </StyledDetails>
-      </StyledCard>
-    </StyledCardWrapper>
+            <StyledDetailsRow>
+              <div>HP: {hp}</div>
+              <div>{types.join(', ')}</div>
+            </StyledDetailsRow>
+          </StyledDetails>
+        </StyledCard>
+      </StyledCardWrapper>
+    </StyledLink>
   );
 };
 

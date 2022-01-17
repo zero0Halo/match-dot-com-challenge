@@ -15,7 +15,7 @@ const StyledHeader = styled(Box).attrs({
 export default function Header() {
   return (
     <StyledHeader>
-      <img src="./logo.svg" alt="match" width="110" />
+      <img src="/logo.svg" alt="match" width="110" />
     </StyledHeader>
   );
 }

@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
 // COMPONENTS
@@ -64,23 +65,25 @@ const SearchPage = () => {
           <Countdown />
 
           <MinimalButton disabled>
-            <img src="filter.svg" width={22} alt="filter" />
+            <img src="/filter.svg" width={22} alt="filter" />
           </MinimalButton>
 
           <MinimalButton onClick={handleSortAscending}>
-            <img src="./ascending.svg" width={22} alt="Sort ascending" />
+            <img src="/ascending.svg" width={22} alt="Sort ascending" />
           </MinimalButton>
 
           <MinimalButton onClick={handleSortDescending}>
-            <img src="./descending.svg" width={22} alt="Sort descending" />
+            <img src="/descending.svg" width={22} alt="Sort descending" />
           </MinimalButton>
         </StyledControls>
 
         <StyledResults>
           {profiles.map((profile) => (
-            <SearchCard data={profile} key={profile.name} />
+            <SearchCard data={profile} key={profile.id} />
           ))}
         </StyledResults>
+
+        <Outlet />
       </StyledMain>
     </>
   );

@@ -83,11 +83,12 @@ function ProfilesContextProvider({ children }) {
           payload.results.map(async (result) => {
             const response = await fetch(result.url);
             const payload = await response.json();
-
+            console.log(payload);
             return {
-              name: payload?.name,
-              image: payload?.sprites?.other?.dream_world?.front_default,
               hp: payload?.stats[0]?.base_stat,
+              id: payload?.id.toString(),
+              image: payload?.sprites?.other?.dream_world?.front_default,
+              name: payload?.name,
               types: payload?.types.map((type) => type.type.name),
             };
           })
