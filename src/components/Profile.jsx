@@ -1,8 +1,9 @@
-import { useContext, useEffect, useMemo } from 'react';
-import { ProfileContext } from './ProfilesContextProvider';
+import { useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
+// COMPONENTS
+import { useProfileContext } from './ProfilesContextProvider';
 
 // Additional CSS filters for the background card depending on the 'type' passed
 const colorFilter = {
@@ -171,7 +172,8 @@ function freezeBody(thaw = false) {
 function Profile() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { profiles, timerPause } = useContext(ProfileContext);
+  const profiles = useProfileContext((ctx) => ctx.profiles);
+  const timerPause = useProfileContext((ctx) => ctx.timerPause);
   const [profile] = useMemo(() => profiles.filter((profile) => profile.id === id), [id, profiles]);
 
   const closeHandler = (e) => {

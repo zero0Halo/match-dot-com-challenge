@@ -1,8 +1,13 @@
-import { createContext, useCallback, useEffect, useReducer } from 'react';
+// Hey Joey, I did look into using Recoil but I was too far along to make the switch easily. Looks
+// really promising though.
+
+import { useCallback, useEffect, useReducer } from 'react';
+import { createContext, useContextSelector } from 'use-context-selector';
 import { useTimer } from 'react-timer-hook';
 import dayjs from 'dayjs';
 
 export const ProfileContext = createContext();
+export const useProfileContext = (fn) => useContextSelector(ProfileContext, (ctx) => fn(ctx));
 
 export const ACTIONS = {
   ASCENDING: 'ASCENDING',
@@ -85,6 +90,8 @@ function ProfilesContextProvider({ children }) {
       const payload = await response.json();
 
       if (payload?.results) {
+        // Unfortunately I have to make individual calls to each pokemon returned from the initial
+        // results in order to get actual useful information.
         const profiles = await Promise.all(
           payload.results.map(async (result) => {
             const response = await fetch(result.url);

@@ -1,8 +1,8 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
-import { ProfileContext } from './ProfilesContextProvider';
+import { useProfileContext } from './ProfilesContextProvider';
 
 const StyledLink = styled(Link)(
   css({
@@ -81,7 +81,7 @@ const StyledDetailsRow = styled('div')(
 
 const SearchCard = ({ data }) => {
   const { name, id, image, stats, types } = data;
-  const { timerPause } = useContext(ProfileContext);
+  const timerPause = useProfileContext((ctx) => ctx.timerPause);
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (

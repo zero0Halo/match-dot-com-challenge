@@ -1,7 +1,8 @@
-import { useContext } from 'react';
+// import { useContext } from 'react';
+// import { useContextSelector } from 'use-context-selector';
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
-import { ProfileContext } from './ProfilesContextProvider';
+import { useProfileContext } from './ProfilesContextProvider';
 
 // https://gka.github.io/palettes/#/10|s|ff3300,1730e5|ffffe0,ff005e,93003a|1|1
 const colorScale = [
@@ -71,13 +72,11 @@ const StyledCount = styled('div')(({ count }) =>
 );
 
 function Countdown() {
-  const {
-    count,
-    loading: loadingProfiles,
-    timerIsRunning,
-    timerResume,
-    timerPause,
-  } = useContext(ProfileContext);
+  const count = useProfileContext((ctx) => ctx.count);
+  const loadingProfiles = useProfileContext((ctx) => ctx.loading);
+  const timerIsRunning = useProfileContext((ctx) => ctx.timerIsRunning);
+  const timerResume = useProfileContext((ctx) => ctx.timerResume);
+  const timerPause = useProfileContext((ctx) => ctx.timerPause);
   const clickHandler = () => {
     if (timerIsRunning || loadingProfiles) {
       timerPause();

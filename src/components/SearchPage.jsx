@@ -1,12 +1,10 @@
-import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
 // COMPONENTS
 import Countdown from './Countdown';
-import Header from './Header';
 import MinimalButton from './MinimalButton';
-import { ACTIONS, ProfileContext } from './ProfilesContextProvider';
+import { ACTIONS, useProfileContext } from './ProfilesContextProvider';
 import SearchCard from './SearchCard';
 
 const StyledError = styled('div')(
@@ -51,14 +49,14 @@ const StyledResults = styled('section')(
 );
 
 const SearchPage = () => {
-  const { dispatch, error, profiles } = useContext(ProfileContext);
+  const dispatch = useProfileContext((ctx) => ctx.dispatch);
+  const error = useProfileContext((ctx) => ctx.error);
+  const profiles = useProfileContext((ctx) => ctx.profiles);
   const handleSortAscending = () => dispatch({ type: ACTIONS.ASCENDING });
   const handleSortDescending = () => dispatch({ type: ACTIONS.DESCENDING });
 
   return (
     <>
-      <Header />
-
       {error && <StyledError>OMG! There was a problem retrieving new profiles!</StyledError>}
 
       <StyledMain>

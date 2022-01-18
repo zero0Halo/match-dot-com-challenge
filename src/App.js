@@ -2,9 +2,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { createGlobalStyle, ThemeProvider } from 'styled-components/macro';
 // COMPONENTS
 import theme from './theme';
-import SearchPage from './components/SearchPage';
+import Header from './components/Header';
 import Profile from './components/Profile';
 import ProfilesContextProvider from './components/ProfilesContextProvider';
+import SearchPage from './components/SearchPage';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -24,6 +25,8 @@ function App() {
     <ProfilesContextProvider>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
+
+        <Header />
 
         <Router>
           <Routes>
