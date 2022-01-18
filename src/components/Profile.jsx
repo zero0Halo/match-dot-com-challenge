@@ -40,8 +40,9 @@ const StyledProfile = styled('section')(
     borderRadius: 'large',
     display: 'block',
     position: 'relative',
-    width: '400px',
+    width: ['16rem', '25rem'],
     boxShadow: '2px 2px 10px rgba(0, 0, 0, 0.5)',
+    pb: 16,
   })
 );
 
@@ -78,7 +79,7 @@ const StyledBackgroundImage = styled('img')(({ type }) =>
 const StyledName = styled('h3')(
   css({
     bg: 'rgba(255,255,255, 0.4)',
-    fontSize: 24,
+    fontSize: [18, 24],
     fontWeight: 'bold',
     m: 0,
     p: 8,
@@ -118,9 +119,10 @@ const StyledImage = styled('img')(
 const StyledStats = styled('section')(
   css({
     display: 'grid',
-    gridGap: '1rem',
-    gridTemplateColumns: '1fr 1fr',
-    p: 24,
+    gridGap: ['0', '1rem'],
+    gridTemplateColumns: ['1fr', '1fr 1fr'],
+    px: [16, 24],
+    py: [8, 24],
     zIndex: '1',
     position: 'relative',
   })
@@ -139,52 +141,61 @@ const StyledTypes = styled('footer')(
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
+    display: 'flex',
     bg: 'rgba(0,0,0, 0.5)',
     color: 'white',
     lineHeight: '2',
     textTransform: 'capitalize',
     textAlign: 'center',
     fontWeight: 'bold',
+    justifyContent: 'space-around',
   })
 );
+
+// Helper function that 'freezes' the position of the body to prevent background scrolling when
+// the page loads. Passing true to the thaw argument unfreezes the body to allow scrolling again.
+function freezeBody(thaw = false) {
+  if (thaw) {
+    const scrollY = document.body.style.top;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    window.scrollTo(0, parseInt(scrollY || '0') * -1);
+  } else {
+    document.body.style.top = `-${window.scrollY}px`;
+    document.body.style.position = 'fixed';
+  }
+}
 
 function Profile() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { profiles, timerPause, timerRestart } = useContext(ProfileContext);
+  const { profiles, timerPause } = useContext(ProfileContext);
   const [profile] = useMemo(() => profiles.filter((profile) => profile.id === id), [id, profiles]);
 
+  const closeHandler = (e) => {
+    if (e && e.target === e.currentTarget) {
+      e.stopPropagation();
+      e.nativeEvent.stopImmediatePropagation();
+      navigate('/');
+    }
+  };
+
+  // On initial render the auto-refresh timer is paused and the body is frozen
   useEffect(() => {
     timerPause();
+    freezeBody();
+
+    return () => freezeBody(true);
   }, [timerPause]);
 
   return (
-    <StyledOverlay
-      onClick={(e) => {
-        if (e && e.target === e.currentTarget) {
-          e.stopPropagation();
-          e.nativeEvent.stopImmediatePropagation();
-          timerRestart();
-          navigate('/');
-        }
-      }}
-    >
+    <StyledOverlay onClick={closeHandler}>
       <StyledProfile>
-        <StyledCloseButton
-          onClick={(e) => {
-            if (e && e.target === e.currentTarget) {
-              e.stopPropagation();
-              e.nativeEvent.stopImmediatePropagation();
-              timerRestart();
-              navigate('/');
-            }
-          }}
-        >
-          +
-        </StyledCloseButton>
+        <StyledCloseButton onClick={closeHandler}>+</StyledCloseButton>
+
         <StyledBackgroundImage src="/card-bg-optimized.png" type={profile?.types[0]} />
+
         <StyledName>{profile?.name}</StyledName>
 
         <StyledImageContainer>

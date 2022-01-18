@@ -8,12 +8,14 @@ import ProfilesContextProvider from './components/ProfilesContextProvider';
 
 const GlobalStyle = createGlobalStyle`
   body {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display:block;
+    font-family: ${({ theme }) => theme.fonts.base};
     font-size: 16px;
     margin: 0;
     padding: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-family: ${({ theme }) => theme.fonts.base};
+    width: 100%;
   }
 `;
 
