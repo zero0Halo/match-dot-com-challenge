@@ -20,15 +20,20 @@ const StyledCardWrapper = styled('article')(
 
 const StyledCard = styled('div')(
   css({
-    border: '1px solid lightgray',
+    aspectRatio: '1 / 1',
+    border: '2px solid lightgray',
     borderRadius: 'base',
     boxShadow: '0 3px 6px lightgray, 0 3px 6px',
     display: 'flex',
-    height: '12.5rem',
+    height: '100%',
     justifyContent: 'center',
     overflow: 'hidden',
     position: 'relative',
-    width: '12.5rem',
+    transition: 'border 250ms',
+    width: '100%',
+    '&:hover': {
+      borderColor: 'red',
+    },
   })
 );
 

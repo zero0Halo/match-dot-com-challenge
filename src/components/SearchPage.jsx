@@ -28,7 +28,7 @@ const StyledMain = styled('main')(
   css({
     mb: 32,
     mx: 'auto',
-    maxWidth: ['500px', '750px', '1000px'],
+    maxWidth: ['500px', '750px', '1000px', '1400px'],
   })
 );
 
@@ -46,6 +46,7 @@ const StyledResults = styled('section')(
     display: 'grid',
     gridGap: '1rem',
     gridTemplateColumns: ['1fr', '1fr 1fr', '1fr 1fr 1fr', '1fr 1fr 1fr 1fr'],
+    p: 16,
   })
 );
 
