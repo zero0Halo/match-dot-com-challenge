@@ -1,9 +1,8 @@
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
-import Box from './Box';
 
-const StyledMinimalButton = styled(Box).attrs({
-  as: 'button',
+const StyledMinimalButton = styled('button').attrs({
+  type: 'button',
 })(({ disabled }) =>
   css({
     backgroundColor: 'transparent',

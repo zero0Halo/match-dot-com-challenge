@@ -10,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    display:block;
+    display: block;
     font-family: ${({ theme }) => theme.fonts.base};
     font-size: 16px;
     margin: 0;

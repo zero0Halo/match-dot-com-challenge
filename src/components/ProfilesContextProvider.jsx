@@ -12,6 +12,8 @@ export const ACTIONS = {
   LOADING_ERROR: 'LOADING_ERROR',
 };
 
+// The API returns a pagination value in its response, so this is only used at first. However
+// when there are no more profiles to return this value is used again, effectively creating a loop.
 const startingAPIUrl = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=12';
 
 const initialState = {
@@ -28,8 +30,16 @@ function reducer(state, { payload, type }) {
   switch (type) {
     case ACTIONS.ASCENDING:
       profiles = [...state.profiles];
-      profiles.sort((profileA, profileB) => (profileA.handle > profileB.handle ? 1 : -1));
+      profiles.sort((profileA, profileB) => (profileA.name > profileB.name ? 1 : -1));
       return { ...state, profiles };
+
+    case ACTIONS.DESCENDING:
+      profiles = [...state.profiles];
+      profiles.sort((profileA, profileB) => (profileA.name < profileB.name ? 1 : -1));
+      return { ...state, profiles };
+
+    case ACTIONS.LOADING_ERROR:
+      return { ...state, error: true, loading: false, loaded: false };
 
     case ACTIONS.PROFILES_LOADED:
       return {
@@ -44,34 +54,30 @@ function reducer(state, { payload, type }) {
     case ACTIONS.PROFILES_LOADING:
       return { ...state, error: false, loading: true, loaded: false };
 
-    case ACTIONS.LOADING_ERROR:
-      return { ...state, error: true, loading: false, loaded: false };
-
-    case ACTIONS.DESCENDING:
-      profiles = [...state.profiles];
-      profiles.sort((profileA, profileB) => (profileA.handle < profileB.handle ? 1 : -1));
-      return { ...state, profiles };
-
     default:
       throw new Error();
   }
 }
 
+const getTenSeconds = () => dayjs().add(10, 'seconds').toDate();
+
 function ProfilesContextProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     isRunning: timerIsRunning,
-    seconds: count,
-    restart,
     pause: timerPause,
+    restart,
+    seconds: count,
+    resume: timerResume,
   } = useTimer({
     autoStart: false,
-    expiryTimestamp: dayjs().add(10, 'seconds').toDate(),
-    onExpire: () => asyncDispatch(),
+    expiryTimestamp: getTenSeconds(),
+    onExpire: () => asyncDispatchLoadProfiles(),
   });
-  const timerRestart = useCallback(() => restart(dayjs().add(10, 'seconds').toDate()), [restart]);
+  const timerRestart = useCallback(() => restart(getTenSeconds()), [restart]);
 
-  const asyncDispatch = useCallback(async () => {
+  // HOISTED!
+  const asyncDispatchLoadProfiles = useCallback(async () => {
     dispatch({ type: ACTIONS.PROFILES_LOADING });
 
     try {
@@ -109,15 +115,25 @@ function ProfilesContextProvider({ children }) {
     }
   }, [state.nextPage, timerRestart]);
 
+  // Calls asyncDispatchLoadProfiles which gets our first batch of profiles.
   useEffect(() => {
+    // These state values are only ever all false at the same time on first render
     if (!state.loaded && !state.loading && !state.error) {
-      asyncDispatch();
+      asyncDispatchLoadProfiles();
     }
-  }, [asyncDispatch, state.error, state.loaded, state.loading]);
+  }, [asyncDispatchLoadProfiles, state.error, state.loaded, state.loading]);
 
   return (
     <ProfileContext.Provider
-      value={{ ...state, asyncDispatch, count, dispatch, timerIsRunning, timerRestart, timerPause }}
+      value={{
+        ...state,
+        count,
+        dispatch,
+        timerIsRunning,
+        timerPause,
+        timerRestart,
+        timerResume,
+      }}
     >
       {children}
     </ProfileContext.Provider>

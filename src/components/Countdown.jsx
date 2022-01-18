@@ -69,13 +69,13 @@ const StyledCount = styled('div')(({ count }) =>
 );
 
 function Countdown() {
-  const { count, timerRestart, timerPause } = useContext(ProfileContext);
+  const { count, timerResume, timerPause } = useContext(ProfileContext);
   const [showStopLoading, setShowStopLoading] = useState(true);
   const clickHandler = () => {
     if (showStopLoading) {
       timerPause();
     } else {
-      timerRestart();
+      timerResume();
     }
     setShowStopLoading((state) => !state);
   };

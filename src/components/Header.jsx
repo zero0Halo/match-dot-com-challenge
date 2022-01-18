@@ -1,11 +1,7 @@
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
-// COMPONENTS
-import Box from './Box';
 
-const StyledHeader = styled(Box).attrs({
-  as: 'header',
-})(
+const StyledHeader = styled('header')(
   css({
     borderBottom: `1px solid #efefef`,
     padding: [8, 16],

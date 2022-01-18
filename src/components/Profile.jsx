@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
 
+// Additional CSS filters for the background card depending on the 'type' passed
 const colorFilter = {
   bug: 'hue-rotate(246deg)',
   electric: 'hue-rotate(199deg) contrast(2)',
@@ -19,15 +20,15 @@ const colorFilter = {
 
 const StyledOverlay = styled('div')(
   css({
+    alignItems: 'center',
     bg: 'rgba(255,255,255,0.85)',
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'fixed',
-    width: '100%',
     height: '100%',
-    top: 0,
+    justifyContent: 'center',
     left: 0,
+    position: 'fixed',
+    top: 0,
+    width: '100%',
   })
 );
 
@@ -38,41 +39,41 @@ const StyledProfile = styled('section')(
     border: 'solid 10px',
     borderColor: '#FFE264',
     borderRadius: 'large',
+    boxShadow: '2px 2px 10px rgba(0, 0, 0, 0.5)',
     display: 'block',
+    pb: 16,
     position: 'relative',
     width: ['16rem', '25rem'],
-    boxShadow: '2px 2px 10px rgba(0, 0, 0, 0.5)',
-    pb: 16,
   })
 );
 
 const StyledCloseButton = styled('button')(
   css({
+    bg: 'red',
+    borderRadius: 'round',
+    borderStyle: 'none',
+    color: 'white',
+    cursor: 'pointer',
+    display: 'block',
+    fontSize: 20,
+    fontWeight: 'bold',
+    height: '2rem',
     position: 'absolute',
     right: '-20px',
     top: '-20px',
-    width: '2rem',
-    height: '2rem',
-    bg: 'red',
-    color: 'white',
-    display: 'block',
-    zIndex: 1000,
-    borderRadius: 'round',
-    borderStyle: 'none',
-    fontSize: 20,
-    fontWeight: 'bold',
     transform: 'rotate(45deg)',
-    cursor: 'pointer',
+    width: '2rem',
+    zIndex: 1000,
   })
 );
 
 const StyledBackgroundImage = styled('img')(({ type }) =>
   css({
     filter: `opacity(50%) ${colorFilter[type] ? colorFilter[type] : ''}`,
-    position: 'absolute',
-    zIndex: '0',
-    width: '100%',
     height: '100%',
+    position: 'absolute',
+    width: '100%',
+    zIndex: '0',
   })
 );
 
@@ -91,20 +92,20 @@ const StyledName = styled('h3')(
 
 const StyledImageContainer = styled('div')(
   css({
+    alignItems: 'center',
     aspectRatio: '4 / 3',
     bg: 'white',
     border: 'ridge silver 4px',
+    boxShadow: '2px 2px 10px rgba(0,0,0,0.4)',
     boxSizing: 'border-box',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
-    p: 16,
     mx: 'auto',
-    width: '90%',
     overflow: 'hidden',
-    boxShadow: '2px 2px 10px rgba(0,0,0,0.4)',
-    zIndex: '1',
+    p: 16,
     position: 'relative',
+    width: '90%',
+    zIndex: '1',
   })
 );
 
@@ -121,10 +122,10 @@ const StyledStats = styled('section')(
     display: 'grid',
     gridGap: ['0', '1rem'],
     gridTemplateColumns: ['1fr', '1fr 1fr'],
+    position: 'relative',
     px: [16, 24],
     py: [8, 24],
     zIndex: '1',
-    position: 'relative',
   })
 );
 
@@ -138,28 +139,28 @@ const StyledStatName = styled('span')(
 
 const StyledTypes = styled('footer')(
   css({
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    display: 'flex',
     bg: 'rgba(0,0,0, 0.5)',
+    bottom: 0,
     color: 'white',
-    lineHeight: '2',
-    textTransform: 'capitalize',
-    textAlign: 'center',
+    display: 'flex',
     fontWeight: 'bold',
     justifyContent: 'space-around',
+    lineHeight: '2',
+    position: 'absolute',
+    textAlign: 'center',
+    textTransform: 'capitalize',
+    width: '100%',
   })
 );
 
 // Helper function that 'freezes' the position of the body to prevent background scrolling when
 // the page loads. Passing true to the thaw argument unfreezes the body to allow scrolling again.
+// https://css-tricks.com/prevent-page-scrolling-when-a-modal-is-open/
 function freezeBody(thaw = false) {
   if (thaw) {
     const scrollY = document.body.style.top;
     document.body.style.position = '';
     document.body.style.top = '';
-    document.body.style.left = '';
     window.scrollTo(0, parseInt(scrollY || '0') * -1);
   } else {
     document.body.style.top = `-${window.scrollY}px`;

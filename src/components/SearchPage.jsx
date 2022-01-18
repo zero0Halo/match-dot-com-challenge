@@ -44,8 +44,8 @@ const StyledControls = styled('div')(
 const StyledResults = styled('section')(
   css({
     display: 'grid',
-    gridTemplateColumns: ['1fr', '1fr 1fr', '1fr 1fr 1fr', '1fr 1fr 1fr 1fr'],
     gridGap: '1rem',
+    gridTemplateColumns: ['1fr', '1fr 1fr', '1fr 1fr 1fr', '1fr 1fr 1fr 1fr'],
   })
 );
 
