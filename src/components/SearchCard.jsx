@@ -7,6 +7,7 @@ import { useProfileContext } from './ProfilesContextProvider';
 const StyledLink = styled(Link)(
   css({
     color: 'neutrals.dark',
+    textDecoration: 'none',
   })
 );
 
@@ -49,6 +50,19 @@ const StyledImage = styled('img')`
   }
 `;
 
+const StyledLoading = styled('div')(({ imageLoaded }) =>
+  css({
+    fontSize: 14,
+    fontWeight: 'bold',
+    left: '50%',
+    opacity: imageLoaded ? 0 : 1,
+    position: 'absolute',
+    top: '50%',
+    transform: 'translate3D(-50%, -50%, 0)',
+    transition: 'opacity 250ms',
+  })
+);
+
 const StyledDetails = styled('div')(
   css({
     backgroundColor: 'white80',
@@ -89,6 +103,8 @@ const SearchCard = ({ data }) => {
     <StyledLink to={`/profile/${id}`} onClick={timerPause}>
       <StyledCardWrapper>
         <StyledCard>
+          <StyledLoading imageLoaded={imageLoaded}>Loading...</StyledLoading>
+
           <StyledImage
             alt="potential date"
             className={imageLoaded ? 'fadeIn' : undefined}
