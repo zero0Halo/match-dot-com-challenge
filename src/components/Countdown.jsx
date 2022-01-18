@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
 import { ProfileContext } from './ProfilesContextProvider';
@@ -46,7 +46,7 @@ const StyledButton = styled('button').attrs({
 
 const StyledButtonText = styled('span')(
   css({
-    width: ['8rem', '10rem'],
+    width: ['7rem', '9rem'],
   })
 );
 
@@ -54,6 +54,8 @@ const StyledCount = styled('div')(({ count }) =>
   css({
     alignItems: 'center',
     bg: colorScale[count - 1],
+    border: 'solid 1px',
+    borderColor: '#ffffff45',
     borderRadius: 'round',
     color: '#FCF5E5',
     display: 'flex',
@@ -69,21 +71,27 @@ const StyledCount = styled('div')(({ count }) =>
 );
 
 function Countdown() {
-  const { count, timerResume, timerPause } = useContext(ProfileContext);
-  const [showStopLoading, setShowStopLoading] = useState(true);
+  const {
+    count,
+    loading: loadingProfiles,
+    timerIsRunning,
+    timerResume,
+    timerPause,
+  } = useContext(ProfileContext);
   const clickHandler = () => {
-    if (showStopLoading) {
+    if (timerIsRunning || loadingProfiles) {
       timerPause();
     } else {
       timerResume();
     }
-    setShowStopLoading((state) => !state);
   };
 
   return (
     <StyledCountdown>
       <StyledButton onClick={clickHandler}>
-        <StyledButtonText>{showStopLoading ? 'Stop' : 'Start'} Auto-Loading</StyledButtonText>
+        <StyledButtonText>
+          {timerIsRunning || loadingProfiles ? 'Stop' : 'Resume'} Loading
+        </StyledButtonText>
         <StyledCount count={count}>{count}</StyledCount>
       </StyledButton>
     </StyledCountdown>
