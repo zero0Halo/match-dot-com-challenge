@@ -30,10 +30,9 @@ const StyledButton = styled('button').attrs({
 })(
   css({
     alignItems: 'center',
-    bg: '#1730e5',
-    border: 'solid gray 1px',
+    bg: 'secondary',
     borderRadius: 'rounded',
-    color: '#FCF5E5',
+    color: 'white',
     cursor: 'pointer',
     display: 'flex',
     fontSize: [12, 16],
@@ -55,10 +54,8 @@ const StyledCount = styled('div')(({ count }) =>
   css({
     alignItems: 'center',
     bg: colorScale[count - 1],
-    border: 'solid 1px',
-    borderColor: '#ffffff45',
     borderRadius: 'round',
-    color: '#FCF5E5',
+    color: 'white',
     display: 'flex',
     fontSize: [12, 16],
     fontWeight: 'bold',

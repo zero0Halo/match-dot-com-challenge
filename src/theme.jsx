@@ -15,6 +15,7 @@ const theme = {
     },
     primary: '#ef5350',
     pokeYellow: '#FFE264',
+    secondary: '#1730e5',
     white40: 'rgba(255,255,255,0.4)',
     white80: 'rgba(255,255,255,0.8)',
   },
