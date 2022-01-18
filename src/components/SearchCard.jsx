@@ -75,7 +75,7 @@ const StyledDetailsRow = styled('div')(
 );
 
 const SearchCard = ({ data }) => {
-  const { name, id, image, hp, types } = data;
+  const { name, id, image, stats, types } = data;
   const { timerPause } = useContext(ProfileContext);
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -94,7 +94,7 @@ const SearchCard = ({ data }) => {
             <StyledH6>{name}</StyledH6>
 
             <StyledDetailsRow>
-              <div>HP: {hp}</div>
+              <div>HP: {stats?.hp}</div>
               <div>{types.join(', ')}</div>
             </StyledDetailsRow>
           </StyledDetails>

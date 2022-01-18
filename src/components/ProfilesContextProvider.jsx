@@ -83,9 +83,14 @@ function ProfilesContextProvider({ children }) {
           payload.results.map(async (result) => {
             const response = await fetch(result.url);
             const payload = await response.json();
-            console.log(payload);
+
+            const stats = payload?.stats.reduce((acc, next) => {
+              acc[next?.stat?.name] = next?.base_stat;
+              return acc;
+            }, {});
+
             return {
-              hp: payload?.stats[0]?.base_stat,
+              stats,
               id: payload?.id.toString(),
               image: payload?.sprites?.other?.dream_world?.front_default,
               name: payload?.name,

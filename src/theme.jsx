@@ -21,6 +21,7 @@ const theme = {
   },
   radii: {
     base: '8px',
+    large: '16px',
     round: '50%',
     rounded: '1000px',
   },
