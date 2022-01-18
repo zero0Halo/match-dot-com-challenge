@@ -22,7 +22,7 @@ const colorFilter = {
 const StyledOverlay = styled('div')(
   css({
     alignItems: 'center',
-    bg: 'rgba(255,255,255,0.85)',
+    bg: 'white80',
     display: 'flex',
     height: '100%',
     justifyContent: 'center',
@@ -38,9 +38,9 @@ const StyledProfile = styled('section')(
     aspectRatio: '5 / 7',
     bg: 'white',
     border: 'solid 10px',
-    borderColor: '#FFE264',
+    borderColor: 'pokeYellow',
     borderRadius: 'large',
-    boxShadow: '2px 2px 10px rgba(0, 0, 0, 0.5)',
+    boxShadow: 'base',
     display: 'block',
     pb: 16,
     position: 'relative',
@@ -50,7 +50,7 @@ const StyledProfile = styled('section')(
 
 const StyledCloseButton = styled('button')(
   css({
-    bg: 'red',
+    bg: 'primary',
     borderRadius: 'round',
     borderStyle: 'none',
     color: 'white',
@@ -80,7 +80,7 @@ const StyledBackgroundImage = styled('img')(({ type }) =>
 
 const StyledName = styled('h3')(
   css({
-    bg: 'rgba(255,255,255, 0.4)',
+    bg: 'white40',
     fontSize: [18, 24],
     fontWeight: 'bold',
     m: 0,
@@ -96,8 +96,9 @@ const StyledImageContainer = styled('div')(
     alignItems: 'center',
     aspectRatio: '4 / 3',
     bg: 'white',
-    border: 'ridge silver 4px',
-    boxShadow: '2px 2px 10px rgba(0,0,0,0.4)',
+    border: 'ridge 4px',
+    borderColor: 'neutrals.base',
+    boxShadow: 'base',
     boxSizing: 'border-box',
     display: 'flex',
     justifyContent: 'center',
@@ -121,7 +122,7 @@ const StyledImage = styled('img')(
 const StyledStats = styled('section')(
   css({
     display: 'grid',
-    gridGap: ['0', '1rem'],
+    gridGap: [0, 16],
     gridTemplateColumns: ['1fr', '1fr 1fr'],
     position: 'relative',
     px: [16, 24],
@@ -140,7 +141,7 @@ const StyledStatName = styled('span')(
 
 const StyledTypes = styled('footer')(
   css({
-    bg: 'rgba(0,0,0, 0.5)',
+    bg: 'black50',
     bottom: 0,
     color: 'white',
     display: 'flex',

@@ -3,7 +3,8 @@ import css from '@styled-system/css';
 
 const StyledHeader = styled('header')(
   css({
-    borderBottom: `1px solid #efefef`,
+    borderBottom: `4px solid`,
+    borderBottomColor: 'primary',
     padding: [8, 16],
   })
 );

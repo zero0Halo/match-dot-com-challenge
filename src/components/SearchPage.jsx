@@ -9,7 +9,7 @@ import SearchCard from './SearchCard';
 
 const StyledError = styled('div')(
   css({
-    backgroundColor: 'red',
+    backgroundColor: 'error',
     borderRadius: 'base',
     color: 'white',
     display: 'block',
@@ -42,7 +42,7 @@ const StyledControls = styled('div')(
 const StyledResults = styled('section')(
   css({
     display: 'grid',
-    gridGap: '1rem',
+    gridGap: 16,
     gridTemplateColumns: ['1fr', '1fr 1fr', '1fr 1fr 1fr', '1fr 1fr 1fr 1fr'],
     p: 16,
   })

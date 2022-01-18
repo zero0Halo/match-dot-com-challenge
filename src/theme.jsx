@@ -6,6 +6,18 @@ breakpoints.lg = breakpoints[3];
 
 const theme = {
   breakpoints,
+  colors: {
+    black50: 'rgba(0,0,0, 0.5)',
+    error: '#ff3300',
+    neutrals: {
+      base: '#e8e8e8',
+      dark: '#333',
+    },
+    primary: '#ef5350',
+    pokeYellow: '#FFE264',
+    white40: 'rgba(255,255,255,0.4)',
+    white80: 'rgba(255,255,255,0.8)',
+  },
   fonts: {
     base: 'Arial, Helvetica, sans-serif',
   },
@@ -23,6 +35,10 @@ const theme = {
     large: '16px',
     round: '50%',
     rounded: '1000px',
+  },
+  shadows: {
+    light: '0 3px 6px #e8e8e8, 0 3px 6px',
+    base: '2px 2px 10px rgba(0, 0, 0, 0.5)',
   },
   space: {
     0: 0,

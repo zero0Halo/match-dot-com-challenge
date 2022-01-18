@@ -6,7 +6,7 @@ import { useProfileContext } from './ProfilesContextProvider';
 
 const StyledLink = styled(Link)(
   css({
-    color: 'black',
+    color: 'neutrals.dark',
   })
 );
 
@@ -21,9 +21,10 @@ const StyledCardWrapper = styled('article')(
 const StyledCard = styled('div')(
   css({
     aspectRatio: '1 / 1',
-    border: '2px solid lightgray',
+    border: '2px solid',
+    borderColor: 'neutrals.base',
     borderRadius: 'base',
-    boxShadow: '0 3px 6px lightgray, 0 3px 6px',
+    boxShadow: 'light',
     display: 'flex',
     height: '100%',
     justifyContent: 'center',
@@ -32,7 +33,7 @@ const StyledCard = styled('div')(
     transition: 'border 250ms',
     width: '100%',
     '&:hover': {
-      borderColor: 'red',
+      borderColor: 'primary',
     },
   })
 );
@@ -50,7 +51,7 @@ const StyledImage = styled('img')`
 
 const StyledDetails = styled('div')(
   css({
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    backgroundColor: 'white80',
     bottom: '0',
     boxSizing: 'border-box',
     overflow: 'hidden',
