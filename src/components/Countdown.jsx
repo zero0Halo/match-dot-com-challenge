@@ -87,6 +87,8 @@ function Countdown() {
     }
   };
 
+  // This is a little weird, but the ability to pause/resume the timer comes from timerDispatch
+  // which other components need access to. This puts that method into the ProfilesContextProvider.
   useEffect(() => {
     profilesDispatch({ type: PROFILES_ACTIONS.SET_TIMER_DISPATCH, payload: timerDispatch });
   }, [profilesDispatch, timerDispatch]);

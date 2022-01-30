@@ -9,7 +9,7 @@ export const ACTIONS = {
 };
 
 const initialState = {
-  count: 1,
+  count: null,
   timerRunning: false,
   timerStopped: false,
 };
@@ -21,7 +21,7 @@ function reducer(state, { type, payload }) {
     case ACTIONS.RESUME_TIMER:
       return { ...state, timerRunning: true, timerStopped: false };
     case ACTIONS.START_TIMER:
-      return { ...initialState, timerRunning: true, timerStopped: false };
+      return { count: payload, timerRunning: true, timerStopped: false };
     case ACTIONS.STOP_TIMER:
       return { ...initialState, timerRunning: false, timerStopped: true };
     case ACTIONS.UPDATE_COUNT:
@@ -43,11 +43,14 @@ export default function useTimer({
 
   const tick = useCallback(() => {
     timerRef.current = setInterval(async () => {
-      const newCount = state.count + 1;
+      const newCount = state.count - 1;
 
-      if (newCount > duration && typeof callback === 'function') {
+      if (newCount === 0 && typeof callback === 'function') {
         await callback(state);
-        dispatch({ type: autoRestart ? ACTIONS.START_TIMER : ACTIONS.STOP_TIMER });
+        dispatch({
+          type: autoRestart ? ACTIONS.START_TIMER : ACTIONS.STOP_TIMER,
+          payload: duration,
+        });
       } else {
         dispatch({ type: ACTIONS.UPDATE_COUNT, payload: newCount });
       }
@@ -67,9 +70,9 @@ export default function useTimer({
 
     if (autoStart) {
       if (typeof callback === 'function' && callbackImmediately) {
-        invokeCallback().then(() => dispatch({ type: ACTIONS.START_TIMER }));
+        invokeCallback().then(() => dispatch({ type: ACTIONS.START_TIMER, payload: duration }));
       } else {
-        dispatch({ type: ACTIONS.START_TIMER });
+        dispatch({ type: ACTIONS.START_TIMER, payload: duration });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
