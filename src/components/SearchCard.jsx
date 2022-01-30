@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
 import { useProfileContext } from './ProfilesContextProvider';
+import { ACTIONS as TIMER_ACTIONS } from './useTimer';
 
 const StyledLink = styled(Link)(
   css({
@@ -96,11 +97,14 @@ const StyledDetailsRow = styled('div')(
 
 const SearchCard = ({ data }) => {
   const { name, id, image, stats, types } = data;
-  const timerPause = useProfileContext((ctx) => ctx.timerPause);
+  const timerDispatch = useProfileContext((ctx) => ctx.timerDispatch);
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    <StyledLink to={`/profile/${id}`} onClick={timerPause}>
+    <StyledLink
+      to={`/profile/${id}`}
+      onClick={() => timerDispatch({ type: TIMER_ACTIONS.PAUSE_TIMER })}
+    >
       <StyledCardWrapper>
         <StyledCard>
           <StyledLoading imageLoaded={imageLoaded}>Loading...</StyledLoading>

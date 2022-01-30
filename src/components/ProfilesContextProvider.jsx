@@ -1,10 +1,5 @@
-// Hey Joey, I did look into using Recoil but I was too far along to make the switch easily. Looks
-// really promising though.
-
-import { useCallback, useEffect, useReducer } from 'react';
+import { useCallback, useReducer } from 'react';
 import { createContext, useContextSelector } from 'use-context-selector';
-import { useTimer } from 'react-timer-hook';
-import dayjs from 'dayjs';
 
 export const ProfileContext = createContext();
 export const useProfileContext = (fn) => useContextSelector(ProfileContext, (ctx) => fn(ctx));
@@ -15,6 +10,7 @@ export const ACTIONS = {
   PROFILES_LOADING: 'PROFILES_LOADING',
   DESCENDING: 'DESCENDING',
   LOADING_ERROR: 'LOADING_ERROR',
+  SET_TIMER_DISPATCH: 'SET_TIMER_DISPATCH',
 };
 
 // The API returns a pagination value in its response, so this is only used at first. However
@@ -27,6 +23,7 @@ const initialState = {
   loaded: false,
   nextPage: null,
   profiles: [],
+  timerDispatch: null,
 };
 
 function reducer(state, { payload, type }) {
@@ -59,27 +56,16 @@ function reducer(state, { payload, type }) {
     case ACTIONS.PROFILES_LOADING:
       return { ...state, error: false, loading: true, loaded: false };
 
+    case ACTIONS.SET_TIMER_DISPATCH:
+      return { ...state, timerDispatch: payload };
+
     default:
       throw new Error();
   }
 }
 
-const getTenSeconds = () => dayjs().add(10, 'seconds').toDate();
-
 function ProfilesContextProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const {
-    isRunning: timerIsRunning,
-    pause: timerPause,
-    restart,
-    seconds: count,
-    resume: timerResume,
-  } = useTimer({
-    autoStart: false,
-    expiryTimestamp: getTenSeconds(),
-    onExpire: () => asyncDispatchLoadProfiles(),
-  });
-  const timerRestart = useCallback(() => restart(getTenSeconds()), [restart]);
 
   // HOISTED!
   const asyncDispatchLoadProfiles = useCallback(async () => {
@@ -113,33 +99,19 @@ function ProfilesContextProvider({ children }) {
         );
 
         dispatch({ type: ACTIONS.PROFILES_LOADED, payload: { profiles, next: payload.next } });
-
-        timerRestart();
       }
     } catch (err) {
       dispatch({ type: ACTIONS.LOADING_ERROR });
       console.error(err);
     }
-  }, [state.nextPage, timerRestart]);
-
-  // Calls asyncDispatchLoadProfiles which gets our first batch of profiles.
-  useEffect(() => {
-    // These state values are only ever all false at the same time on first render
-    if (!state.loaded && !state.loading && !state.error) {
-      asyncDispatchLoadProfiles();
-    }
-  }, [asyncDispatchLoadProfiles, state.error, state.loaded, state.loading]);
+  }, [state.nextPage]);
 
   return (
     <ProfileContext.Provider
       value={{
         ...state,
-        count,
+        asyncDispatchLoadProfiles,
         dispatch,
-        timerIsRunning,
-        timerPause,
-        timerRestart,
-        timerResume,
       }}
     >
       {children}

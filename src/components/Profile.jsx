@@ -4,6 +4,7 @@ import styled from 'styled-components/macro';
 import css from '@styled-system/css';
 // COMPONENTS
 import { useProfileContext } from './ProfilesContextProvider';
+import { ACTIONS as TIMER_ACTIONS } from './useTimer';
 
 // Additional CSS filters for the background card depending on the 'type' passed
 const colorFilter = {
@@ -174,7 +175,7 @@ function Profile() {
   const { id } = useParams();
   const navigate = useNavigate();
   const profiles = useProfileContext((ctx) => ctx.profiles);
-  const timerPause = useProfileContext((ctx) => ctx.timerPause);
+  const timerDispatch = useProfileContext((ctx) => ctx.timerDispatch);
   const [profile] = useMemo(() => profiles.filter((profile) => profile.id === id), [id, profiles]);
 
   const closeHandler = (e) => {
@@ -187,11 +188,11 @@ function Profile() {
 
   // On initial render the auto-refresh timer is paused and the body is frozen
   useEffect(() => {
-    timerPause();
+    timerDispatch({ type: TIMER_ACTIONS.PAUSE_TIMER });
     freezeBody();
 
     return () => freezeBody(true);
-  }, [timerPause]);
+  }, [timerDispatch]);
 
   return (
     <StyledOverlay onClick={closeHandler}>

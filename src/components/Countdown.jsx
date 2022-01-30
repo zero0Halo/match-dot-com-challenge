@@ -1,8 +1,8 @@
-// import { useContext } from 'react';
-// import { useContextSelector } from 'use-context-selector';
+import { useEffect } from 'react';
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
-import { useProfileContext } from './ProfilesContextProvider';
+import { ACTIONS as PROFILES_ACTIONS, useProfileContext } from './ProfilesContextProvider';
+import useTimer, { ACTIONS as TIMER_ACTIONS } from './useTimer';
 
 // https://gka.github.io/palettes/#/10|s|ff3300,1730e5|ffffe0,ff005e,93003a|1|1
 const colorScale = [
@@ -69,24 +69,33 @@ const StyledCount = styled('div')(({ count }) =>
 );
 
 function Countdown() {
-  const count = useProfileContext((ctx) => ctx.count);
+  const asyncDispatchLoadProfiles = useProfileContext((ctx) => ctx.asyncDispatchLoadProfiles);
+  const profilesDispatch = useProfileContext((ctx) => ctx.dispatch);
+  const { count, timerDispatch, timerRunning } = useTimer({
+    autoStart: true,
+    autoRestart: true,
+    callback: async () => await asyncDispatchLoadProfiles(),
+    callbackImmediately: true,
+    duration: 10,
+  });
   const loadingProfiles = useProfileContext((ctx) => ctx.loading);
-  const timerIsRunning = useProfileContext((ctx) => ctx.timerIsRunning);
-  const timerResume = useProfileContext((ctx) => ctx.timerResume);
-  const timerPause = useProfileContext((ctx) => ctx.timerPause);
   const clickHandler = () => {
-    if (timerIsRunning || loadingProfiles) {
-      timerPause();
+    if (timerRunning || loadingProfiles) {
+      timerDispatch({ type: TIMER_ACTIONS.PAUSE_TIMER });
     } else {
-      timerResume();
+      timerDispatch({ type: TIMER_ACTIONS.RESUME_TIMER });
     }
   };
+
+  useEffect(() => {
+    profilesDispatch({ type: PROFILES_ACTIONS.SET_TIMER_DISPATCH, payload: timerDispatch });
+  }, [profilesDispatch, timerDispatch]);
 
   return (
     <StyledCountdown>
       <StyledButton onClick={clickHandler}>
         <StyledButtonText>
-          {timerIsRunning || loadingProfiles ? 'Stop' : 'Resume'} Loading
+          {timerRunning || loadingProfiles ? 'Stop' : 'Resume'} Loading
         </StyledButtonText>
         <StyledCount count={count}>{count}</StyledCount>
       </StyledButton>

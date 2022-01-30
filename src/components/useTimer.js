@@ -31,21 +31,28 @@ function reducer(state, { type, payload }) {
   }
 }
 
-export default function useTimer({ duration, autoRestart = false, autoStart = false, onExpire }) {
+export default function useTimer({
+  duration,
+  autoRestart = false,
+  autoStart = false,
+  callback,
+  callbackImmediately,
+}) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const timerRef = useRef(null);
 
   const tick = useCallback(() => {
-    timerRef.current = setInterval(() => {
+    timerRef.current = setInterval(async () => {
       const newCount = state.count + 1;
-      dispatch({ type: ACTIONS.UPDATE_COUNT, payload: newCount });
 
-      if (newCount === duration && typeof onExpire === 'function') {
-        onExpire(state);
+      if (newCount > duration && typeof callback === 'function') {
+        await callback(state);
         dispatch({ type: autoRestart ? ACTIONS.START_TIMER : ACTIONS.STOP_TIMER });
+      } else {
+        dispatch({ type: ACTIONS.UPDATE_COUNT, payload: newCount });
       }
     }, 1000);
-  }, [autoRestart, duration, onExpire, state]);
+  }, [state, duration, callback, autoRestart]);
 
   useEffect(() => {
     if (state.timerRunning) {
@@ -56,10 +63,17 @@ export default function useTimer({ duration, autoRestart = false, autoStart = fa
   }, [state.count, state.timerRunning, tick]);
 
   useEffect(() => {
+    const invokeCallback = async () => await callback(state);
+
     if (autoStart) {
-      dispatch({ type: ACTIONS.START_TIMER });
+      if (typeof callback === 'function' && callbackImmediately) {
+        invokeCallback().then(() => dispatch({ type: ACTIONS.START_TIMER }));
+      } else {
+        dispatch({ type: ACTIONS.START_TIMER });
+      }
     }
-  }, [autoStart]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { ...state, timerDispatch: dispatch };
 }

@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { createGlobalStyle, ThemeProvider } from 'styled-components/macro';
 // COMPONENTS
@@ -7,7 +6,6 @@ import Header from './components/Header';
 import Profile from './components/Profile';
 import ProfilesContextProvider from './components/ProfilesContextProvider';
 import SearchPage from './components/SearchPage';
-import useTimer, { ACTIONS } from './components/useTimer';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -23,22 +21,13 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  const { count: count2, timerDispatch } = useTimer({
-    autoStart: true,
-    autoRestart: true,
-    duration: 10,
-    onExpire: () => console.log('tick'),
-  });
-
   return (
     <ProfilesContextProvider>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <button onClick={() => timerDispatch({ type: ACTIONS.START_TIMER })}>Start</button>
-        <button onClick={() => timerDispatch({ type: ACTIONS.STOP_TIMER })}>Stop</button> <br />
-        <button onClick={() => timerDispatch({ type: ACTIONS.PAUSE_TIMER })}>Pause</button>
-        <button onClick={() => timerDispatch({ type: ACTIONS.RESUME_TIMER })}>Resume</button> <br />
+
         <Header />
+
         <Router>
           <Routes>
             <Route path="/" element={<SearchPage />}>
