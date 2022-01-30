@@ -40,43 +40,45 @@ export default function useTimer({
 }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const timerRef = useRef(null);
+  const isFirstRender = useRef(true);
 
   const tick = useCallback(() => {
-    timerRef.current = setInterval(async () => {
-      const newCount = state.count - 1;
-
-      if (newCount === 0 && typeof callback === 'function') {
-        await callback(state);
-        dispatch({
-          type: autoRestart ? ACTIONS.START_TIMER : ACTIONS.STOP_TIMER,
-          payload: duration,
-        });
-      } else {
-        dispatch({ type: ACTIONS.UPDATE_COUNT, payload: newCount });
-      }
+    timerRef.current = setInterval(() => {
+      dispatch({ type: ACTIONS.UPDATE_COUNT, payload: state.count - 1 });
     }, 1000);
-  }, [state, duration, callback, autoRestart]);
+  }, [state]);
 
   useEffect(() => {
+    if (isFirstRender.current && autoStart) {
+      isFirstRender.current = false;
+      if (typeof callback === 'function' && callbackImmediately) {
+        (async () => await callback())();
+      }
+      dispatch({ type: ACTIONS.START_TIMER, payload: duration });
+    }
+
+    if (state.count === 0) {
+      if (typeof callback === 'function') {
+        (async () => await callback())();
+      }
+      dispatch({ type: autoRestart ? ACTIONS.START_TIMER : ACTIONS.STOP_TIMER, payload: duration });
+    }
+
     if (state.timerRunning) {
       tick();
     }
 
     return () => clearInterval(timerRef.current);
-  }, [state.count, state.timerRunning, tick]);
-
-  useEffect(() => {
-    const invokeCallback = async () => await callback(state);
-
-    if (autoStart) {
-      if (typeof callback === 'function' && callbackImmediately) {
-        invokeCallback().then(() => dispatch({ type: ACTIONS.START_TIMER, payload: duration }));
-      } else {
-        dispatch({ type: ACTIONS.START_TIMER, payload: duration });
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [
+    autoRestart,
+    autoStart,
+    callback,
+    callbackImmediately,
+    duration,
+    state.count,
+    state.timerRunning,
+    tick,
+  ]);
 
   return { ...state, timerDispatch: dispatch };
 }

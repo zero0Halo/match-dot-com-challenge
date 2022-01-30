@@ -188,7 +188,10 @@ function Profile() {
 
   // On initial render the auto-refresh timer is paused and the body is frozen
   useEffect(() => {
-    timerDispatch({ type: TIMER_ACTIONS.PAUSE_TIMER });
+    if (typeof timerDispatch === 'function') {
+      timerDispatch({ type: TIMER_ACTIONS.PAUSE_TIMER });
+    }
+
     freezeBody();
 
     return () => freezeBody(true);
