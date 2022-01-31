@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import css from '@styled-system/css';
@@ -176,7 +176,7 @@ function Profile() {
   const navigate = useNavigate();
   const profiles = useProfileContext((ctx) => ctx.profiles);
   const timerDispatch = useProfileContext((ctx) => ctx.timerDispatch);
-  const [profile] = useMemo(() => profiles.filter((profile) => profile.id === id), [id, profiles]);
+  const [profile, setProfile] = useState(profiles.find((profile) => profile.id === id));
 
   const closeHandler = (e) => {
     if (e && e.target === e.currentTarget) {
@@ -196,6 +196,30 @@ function Profile() {
 
     return () => freezeBody(true);
   }, [timerDispatch]);
+
+  // This is to handle deep-linking, so if the user tries to view a pokemon directly by typing in its
+  // id in the url but its data doesn't exist in context, it'll hit the api directly and get the data
+  useEffect(() => {
+    if (!profile) {
+      (async () => {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+        const payload = await response.json();
+
+        const stats = payload?.stats.reduce((acc, next) => {
+          acc[next?.stat?.name] = next?.base_stat;
+          return acc;
+        }, {});
+
+        setProfile({
+          stats,
+          id: payload?.id.toString(),
+          image: payload?.sprites?.other?.dream_world?.front_default,
+          name: payload?.name,
+          types: payload?.types.map((type) => type.type.name),
+        });
+      })();
+    }
+  }, [id, profile]);
 
   return (
     <StyledOverlay onClick={closeHandler}>

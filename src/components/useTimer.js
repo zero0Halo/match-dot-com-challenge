@@ -1,3 +1,6 @@
+// TODO: I don't believe this will work outside of the immediate need of this project. It expects
+// to be run with a callback function, autoRestart set to true and autoStart set to true. It's a
+// decent start though.
 import { useCallback, useEffect, useReducer, useRef } from 'react';
 
 export const ACTIONS = {
